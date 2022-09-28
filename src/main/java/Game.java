@@ -11,8 +11,7 @@ import java.io.IOException;
 public class Game {
     Screen screen;
 
-    private int x = 10;
-    private int y = 10;
+    Hero hero = new Hero(10,10);
 
     public Game() {
         try {
@@ -29,36 +28,43 @@ public class Game {
 
     private void draw() throws IOException {
         screen.clear();
-        screen.setCharacter(x, y, TextCharacter.fromCharacter('X')[0]);
+        hero.draw(screen);
         screen.refresh();
     }
 
-    private void processKey (KeyStroke key) {
+    private void processKey (KeyStroke key) throws IOException {
         System.out.println(key);
-        if (key.getKeyType() == KeyType.ArrowUp) {
-            y--;
-        }
-        if (key.getKeyType() == KeyType.ArrowDown) {
-            y++;
-        }
-        if (key.getKeyType() == KeyType.ArrowLeft) {
-            x--;
-        }
-        if (key.getKeyType() == KeyType.ArrowRight) {
-            x++;
-        }
+        switch (key.getKeyType()) {
+            case ArrowUp:
+                moveHero(hero.moveUp()); break;
+            case ArrowDown:
+                moveHero(hero.moveDown()); break;
+            case ArrowLeft:
+                moveHero(hero.moveLeft()); break;
+            case ArrowRight:
+                moveHero(hero.moveRight()); break;
+            case Character:
+                if (key.getCharacter() == 'q') {screen.close(); break;}
 
-        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {}
 
+        }
         
+        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {}
 
     }
 
-    public void run() throws IOException {
-        draw();
-        KeyStroke key = screen.readInput();
-        processKey(key);
 
+    private void moveHero(Position position) {
+        hero.setPosition(position);
+    }
+
+    public void run() throws IOException {
+        while (true) {
+            draw();
+            KeyStroke key = screen.readInput();
+            processKey(key);
+            if (key.getKeyType()==KeyType.EOF) break;
+        }
     }
 
 }
