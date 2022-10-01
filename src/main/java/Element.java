@@ -1,4 +1,6 @@
-public class Element {
+import com.googlecode.lanterna.graphics.TextGraphics;
+
+public abstract class Element {
 
     protected Position position = new Position(0,0);
 
@@ -14,6 +16,8 @@ public class Element {
     public Element(Position position) {
         this.position = position;
     }
+
+    public abstract void draw(TextGraphics graphics);
 
 
 }
