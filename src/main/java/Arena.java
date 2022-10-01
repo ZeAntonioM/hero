@@ -6,15 +6,37 @@ import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.screen.Screen;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Arena {
 
     private int width, height;
 
+    private List<Wall> walls;
+
+    private List<Wall> createWalls() {
+        List <Wall> walls = new ArrayList<>();
+
+        for (int c = 0; c < width; c++) {
+            walls.add(new Wall(c, 0));
+            walls.add(new Wall(c, height - 1));
+        }
+        for (int r = 1; r < height - 1; r++) {
+            walls.add(new Wall(0, r));
+            walls.add(new Wall(width - 1, r));
+        }
+        return walls;
+
+    }
 
     Hero hero = new Hero(10,10);
 
-    public Arena(int width_, int height_) { width = width_; height = height_; }
+    public Arena(int width_, int height_) {
+        width = width_; height = height_;
+        this.walls = createWalls();
+    }
 
     public void moveHero(Position position) {
         if (canHeroMove(position))
@@ -22,15 +44,16 @@ public class Arena {
     }
 
     private boolean canHeroMove(Position position) {
-        if ( (position.getX_() >= 0) && (position.getX_() < width) && (position.getY_() >= 0) && (position.getY_() < height)) return true;
+        if ( (position.getX_() > 0) && (position.getX_() < width-1) && (position.getY_() > 0) && (position.getY_() < height-1)) return true;
         return false;
     }
 
     public void draw(TextGraphics graphics) {
-
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
         hero.draw(graphics);
+        for (Wall wall : walls)
+            wall.draw(graphics);
     }
 
     public void processKey(KeyStroke key, Screen screen) throws IOException{
