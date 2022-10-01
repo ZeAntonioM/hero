@@ -44,8 +44,9 @@ public class Arena {
     }
 
     private boolean canHeroMove(Position position) {
-        if ( (position.getX_() > 0) && (position.getX_() < width-1) && (position.getY_() > 0) && (position.getY_() < height-1)) return true;
-        return false;
+        for (Wall wall : walls)
+            if ( wall.getPosition().equals(position) ) return false;
+        return true;
     }
 
     public void draw(TextGraphics graphics) {
@@ -57,7 +58,7 @@ public class Arena {
     }
 
     public void processKey(KeyStroke key, Screen screen) throws IOException{
-        System.out.println(key);
+        //System.out.println(key);
         switch (key.getKeyType()) {
             case ArrowUp:
                 moveHero(hero.moveUp());

@@ -3,19 +3,15 @@ import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 
-public class Wall {
+public class Wall extends Element{
 
-    private Position position = new Position(0,0);
-
-    public Wall(int x, int y) {
-        position.setX_(x);
-        position.setY_(y);
-    }
+    public Wall(int x, int y) { super(new Position(x,y));}
 
     public void draw(TextGraphics graphics) {
         graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
         graphics.enableModifiers(SGR.BOLD);
-        graphics.putString(new TerminalPosition(position.getX_(), position.getY_()), "X");
+        graphics.putString(new TerminalPosition(position.getX_(), position.getY_()), "W");
     }
+
 
 }

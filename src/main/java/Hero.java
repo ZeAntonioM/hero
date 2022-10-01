@@ -5,19 +5,9 @@ import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.screen.Screen;
 
-public class Hero {
+public class Hero extends Element{
 
-    private Position position = new Position(0,0);
-
-    public Hero(int x, int y) {
-        position.setX_(x);
-        position.setY_(y);
-    }
-
-    public void setPosition(Position position_){
-        position.setX_(position_.getX_());
-        position.setY_(position_.getY_());
-    }
+    public Hero(int x, int y) { super(new Position(x,y));}
 
     public void draw(TextGraphics graphics) {
         graphics.setForegroundColor(TextColor.Factory.fromString("#FFFF33"));
