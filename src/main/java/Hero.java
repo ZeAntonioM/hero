@@ -3,12 +3,12 @@ import com.googlecode.lanterna.screen.Screen;
 
 public class Hero {
 
+    private Position position = new Position(0,0);
+
     public Hero(int x, int y) {
         position.setX_(x);
         position.setY_(y);
     }
-
-    private Position position;
 
     public void setPosition(Position position_){
         position.setX_(position_.getX_());

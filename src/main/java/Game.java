@@ -48,8 +48,6 @@ public class Game {
 
 
         }
-        
-        if (key.getKeyType() == KeyType.Character && key.getCharacter() == 'q') {}
 
     }
 
