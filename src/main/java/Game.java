@@ -1,4 +1,4 @@
-import com.googlecode.lanterna.TextCharacter;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.screen.Screen;
@@ -11,7 +11,7 @@ import java.io.IOException;
 public class Game {
     Screen screen;
 
-    Hero hero = new Hero(10,10);
+    Arena arena = new Arena (80,24);
 
     public Game() {
         try {
@@ -27,33 +27,14 @@ public class Game {
     }
 
     private void draw() throws IOException {
+        TextGraphics graphics = screen.newTextGraphics();
         screen.clear();
-        hero.draw(screen);
+        arena.draw(screen.newTextGraphics());
         screen.refresh();
     }
 
-    private void processKey (KeyStroke key) throws IOException {
-        System.out.println(key);
-        switch (key.getKeyType()) {
-            case ArrowUp:
-                moveHero(hero.moveUp()); break;
-            case ArrowDown:
-                moveHero(hero.moveDown()); break;
-            case ArrowLeft:
-                moveHero(hero.moveLeft()); break;
-            case ArrowRight:
-                moveHero(hero.moveRight()); break;
-            case Character:
-                if (key.getCharacter() == 'q') {screen.close(); break;}
-
-
-        }
-
-    }
-
-
-    private void moveHero(Position position) {
-        hero.setPosition(position);
+    private void processKey (KeyStroke key) throws IOException{
+        arena.processKey(key, screen);
     }
 
     public void run() throws IOException {
