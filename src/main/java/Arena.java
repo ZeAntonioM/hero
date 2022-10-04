@@ -14,6 +14,7 @@ import java.util.Random;
 public class Arena {
 
     private int width, height;
+    public int score = 0;
 
     private List<Wall> walls;
     private List<Coin> coins;
@@ -51,7 +52,7 @@ public class Arena {
     }
     private List<Monster> createMonsters() {
         ArrayList<Monster> monsters  = new ArrayList<>();
-        for (int i = 0; i < 15; i++)
+        for (int i = 0; i < 1; i++)
             monsters.add(createMonster());
         return monsters;
     }
@@ -126,6 +127,8 @@ public class Arena {
         for (Coin coin : coins)
             if (hero.position.equals(coin.position) ) {
                 coins.remove(coin);
+                score++;
+                System.out.println("Score: " + score);
                 monsters.add(createMonster());
                 break;
             }
@@ -137,6 +140,7 @@ public class Arena {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
         hero.draw(graphics);
+        if (coins.isEmpty()) this.coins = createCoins();
         for (Coin coin : coins)
             coin.draw(graphics);
         for (Monster monster:monsters)
