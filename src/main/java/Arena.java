@@ -142,7 +142,6 @@ public class Arena {
     }
 
     public void processKey(KeyStroke key, Screen screen) throws IOException{
-        System.out.println(key);
         switch (key.getKeyType()) {
             case ArrowUp:
                 moveHero(hero.moveUp());

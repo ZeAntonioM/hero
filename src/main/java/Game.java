@@ -43,7 +43,8 @@ public class Game {
             KeyStroke key = screen.readInput();
             processKey(key);
             if (arena.verifyMonsterCollisions()) {
-                System.out.println("GAME OVER");
+                System.out.println("You got defeated by a Monster. GAME OVER");
+                screen.close();
                 break;
             }
             if (key.getKeyType()==KeyType.EOF) break;
