@@ -44,12 +44,15 @@ public class Arena {
         return coins;
     }
 
-    private List<Monster> createMonsters() {
+    private Monster createMonster() {
         Random random = new Random();
+        return new Monster(random.nextInt(width - 2) + 1,
+                random.nextInt(height - 2) + 1);
+    }
+    private List<Monster> createMonsters() {
         ArrayList<Monster> monsters  = new ArrayList<>();
         for (int i = 0; i < 15; i++)
-            monsters.add(new Monster(random.nextInt(width - 2) + 1,
-                    random.nextInt(height - 2) + 1));
+            monsters.add(createMonster());
         return monsters;
     }
 
@@ -123,6 +126,7 @@ public class Arena {
         for (Coin coin : coins)
             if (hero.position.equals(coin.position) ) {
                 coins.remove(coin);
+                monsters.add(createMonster());
                 break;
             }
     }
@@ -133,12 +137,12 @@ public class Arena {
         graphics.setBackgroundColor(TextColor.Factory.fromString("#336699"));
         graphics.fillRectangle(new TerminalPosition(0, 0), new TerminalSize(width, height), ' ');
         hero.draw(graphics);
-        for (Wall wall : walls)
-            wall.draw(graphics);
         for (Coin coin : coins)
             coin.draw(graphics);
         for (Monster monster:monsters)
             monster.draw(graphics);
+        for (Wall wall : walls)
+            wall.draw(graphics);
     }
 
     public void processKey(KeyStroke key, Screen screen) throws IOException{
